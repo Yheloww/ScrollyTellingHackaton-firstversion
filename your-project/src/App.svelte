@@ -102,6 +102,11 @@
 	}
 	let x = 50;
 	let y = 50;
+	let fleche_src = "/img/fleche1-13.svg";
+	let infos = "";
+	let region_url = "/img/cercle1-03.svg";
+
+
 
 	// Actions for Scroller components
 	const actions = {
@@ -134,13 +139,13 @@
 		},
 		chart: {
 			chart01: () => {
-				index= 0;
+				index= 1;
 			},
 			chart02: () => {
-				index = 1;
+				index = 2;
 			},
 			chart03: () => {
-				index = 2;
+				index = 3;
 			},
 			chart04: () => {
 				index =3;
@@ -150,20 +155,41 @@
 			loi01: () => {
 			},
 			loi02: () => {
+			},
+			loi03: () => {
+			},
+			loi04: () => {
+			},
+			loi05: () => {
 			}
 		},
 		cercle: {
 			cercle01: () => {
-				x=50;
-				y=50;
+				region_url = "/img/cercle1-03.svg";
 			},
 			cercle02: () => {
+				region_url = "/img/cercle2-06.svg";
+
 			},
 			cercle03: () => {
+				region_url = "/img/cercle3-04.svg";
+
 			},
 			cercle04: () => {
+				region_url = "/img/cercle4-05.svg";
+
 			}
-		}
+		},
+		fleche: {
+			fleche01: () => {
+				fleche_src = "/img/fleche1-13.svg";
+				infos = "0%";
+			},
+			fleche02: () => {
+				fleche_src = "/img/fleche2-14.svg";
+				infos = "38%";
+			}
+		},
 	};
 
 	// Code to run Scroller actions when new caption IDs come into view
@@ -252,14 +278,14 @@ let answer ="";
 
 
 function handleClick() {
-		if(percentage == 5){
-			response = "Bravo";
-		} else if ( percentage < 49 ){
-			response= 'pas loin';
-		} else if (percentage >= 50){
-			response = 'oups ';
+		if(percentage == 4){
+			response = "Bien joué ! Dans l’enseignement supérieur belge, la proportion de cours qui abordent les enjeux climatiques est légèrement inférieure à";
+		} else if ( percentage < 10 ){
+			response= ': Pas si loin ! En réalité, dans l’enseignement supérieur belge, la proportion de cours qui abordent les enjeux climatiques est légèrement inférieure à ';
+		} else if (percentage >= 10){
+			response = 'Oups, raté… En réalité, dans l’enseignement supérieur belge, la proportion de cours qui abordent les enjeux climatiques est légèrement inférieure à ';
 		}
-		answer = "5%";
+		answer = "4%";
 	}
 
 let src ="";
@@ -267,33 +293,35 @@ let answer3 = "";
 
 function UNifClick() {
 			src = "/img/université-10.svg"
-			answer3 = "bien joué"
+			answer3 = "Tout à fait ! Les universités arrivent largement en tête. Si l’on s’intéresse à l’ensemble des cours qui traitent des enjeux climatiques en Belgique, on s’aperçoit que 69% sont dispensés par des universités … contre 31% seulement par des hautes écoles "
 	}
 function HEClick(){
 			src ="/img/hauteecole-11.svg"
-			answer3 = "nope"
+			answer3 = "Et non… Ce sont en fait les universités qui arrivent largement en tête. Si l’on s’intéresse à l’ensemble des cours qui traitent des enjeux climatiques en Belgique, on s’aperçoit que 69% sont dispensés par des universités … contre 31% seulement par des hautes écoles"
 }
 
 	$: number = 1;
 	let image = ['/img/bonhomme_tous-12.svg','/img/bonhomme_tous2-12.svg','/img/bonhomme_tous3-12.svg','/img/bonhomme_tous4-12.svg'];
-	let index = 0;
+	let index = 1;
 
 </script>
+<div>
+	<img id="header" src="/img/hacktualite-19.svg" alt="scroll" style="width:30%; margin-bottom:0.25cm; margin-top:0.5cm" class="center"/>
 
+</div>
 
 <Header bgcolor="#F9F8F4" bgfixed={true} theme="dark" center={false} short={true}>
 	<img src="/img/titre-07.svg" alt=""/>
 
-	<p class="text-big" style="margin-top: 5px">
-		This is a short text description of the article that might take up a couple of lines
-	</p>
+	<p class="center" style="margin-top: 5px">
+		Malgré l'urgence climatique à laquelle nous sommes confrontés, les universités et hautes écoles belges semblent ne pas accorder suffisamment d'importance à la formation sur le climat. En effet, peu de cours spécifiques sont proposés aux étudiants pour leur permettre de comprendre les enjeux environnementaux actuels et d’entrer dans une nouvelle génération de professionnels avertis. Dans cet article, nous vous amenons à constater le manque cruel de présence de cours sur le climat dans l’enseignement supérieur belge. 	</p>
 	<img id="planete" src="/img/planete-06.svg" alt="scroll"/>
 	
 </Header>
 
 <!-- // quizz 1 -->
 	<div>
-	<h2 class="center">Selon vous, quel est le pourcentage de cours qui traitent des enjeux climatiques et environnementaux dans les universités et hautes écoles belges ?  </h2>
+	<h2 class="center" style=''>Selon vous, quel est le pourcentage de cours qui traitent des enjeux climatiques et environnementaux dans les universités et hautes écoles belges ?  </h2>
 	</div>
 	<div>
 		<p class="center">{percentage} %</p>
@@ -302,7 +330,7 @@ function HEClick(){
 	<button on:click={handleClick} id="close-image" class='testbutton'>
 		confirmer
 	</button>
-	<p> {response}</p>
+	<p class='center'> {response}</p>
 	<p class="big center"> {answer}</p>
 
 <!-- // texte de loi -->
@@ -316,16 +344,37 @@ function HEClick(){
 	<div slot="foreground">
 		<section data-id="loi01">
 			<div class="col-medium">
-				<p>
-					texte de loi
-				</p>
+				<p class="center">En 2020, le Parlement européen a voté le Pacte vert pour l’Europe. Objectif : une Union européenne neutre en carbone d’ici 2050. </p>
 			</div>
 		</section>
 		<section data-id="loi02">
 			<div class="col-medium">
-				<img id="planete" src="/img/loi-09.svg" alt="scroll"/>
-
+				<p class="center">Le pacte insiste notamment sur l’importance de l’enseignement pour effectuer cette transition.</p>
 			</div>
+		</section>
+
+		<section data-id="loi03">
+			<div class="col-medium">
+					<img id="planete" src="/img/loi-09.svg" alt="scroll"/>
+			</div>
+		</section>
+
+		<section data-id="loi04">
+			<div class="col-medium">
+				<p class="center">
+					En effet, si l’on souhaite comprendre les causes du changement climatique et mettre en place des solutions pour le combattre, il est nécessaire de développer des compétences nouvelles dans tous les domaines. Cela passe notamment par les hautes écoles et les universités.
+				</p>
+			</div>
+		</section>
+
+		<section data-id="loi05">
+			<div class="col-medium">
+				<p class="center">
+					Pourtant, en Belgique, on est loin de répondre à cet objectif…
+				</p>
+			</div>
+		</section>
+
 	</div>
 </Scroller>
 	
@@ -333,7 +382,7 @@ function HEClick(){
 <Scroller {threshold} bind:id={id['chart']} splitscreen={true}>
 	<div slot="background">
 
-		<h2>Population active</h2>
+		<h2 class="center">Population active belge</h2>
 		{#each [image[index]] as src (index)}
 	<img transition:fade class="bonhomme" {src} alt="" />	
 	{/each}
@@ -343,28 +392,31 @@ function HEClick(){
 		<section data-id="chart01">
 			<div class="col-medium">
 				<p class='center'>
-				image 1
+					Au sein de la population active de notre pays, seulement 1 personne sur 20 a reçu un enseignement qui aborde les questions climatiques
 				</p>
 			</div>
 		</section>
 		<section data-id="chart02">
 			<div class="col-medium">
 				<p class='center'>
-					image 2
+					En supposant une transformation rapide de la majorité des formations d’ici dix ans, il faudrait attendre 2045 pour passer à 1 personne sur 3. 
 				</p>
 			</div>
 		</section>
 		<section data-id="chart03">
 			<div class="col-medium">
 				<p class="center">
-					image 3
+					Ce n’est qu’en 2060 que l’on pourrait espérer voir la moitié de la population active belge formée aux questions climatiques. C’est un changement qui est donc possible, mais qui demande du travail.
 				</p>
 			</div>
 		</section>		
 	<section data-id="chart04">
 		<div class="col-medium">
 			<p class="center">
-				image 4
+				Les universités et les hautes écoles, qui forment près de la moitié de la population en Belgique, doivent par conséquent améliorer leur offre de cours qui abordent les enjeux climatiques si elles souhaitent être en accord avec le Pacte vert européen. 
+			</p>
+			<p class="center">
+				Le manque de données disponibles ne permet malheureusement pas d’analyser l’évolution de cette offre au fil du temps. Nous pouvons cependant analyser la situation actuelle. 
 			</p>
 		</div>
 	</section>	
@@ -374,37 +426,36 @@ function HEClick(){
 
 <Scroller {threshold} bind:id={id['cercle']} splitscreen={true}>
 	<div slot="background">
-			<img id="planete" src="/img/cercle1-03.svg" alt="scroll" class='center cercle'/>
+			<img id="planete" src={region_url} alt="scroll" class='center cercle'/>
 	</div>
 
 
 	<div slot="foreground">
 		<section data-id="cercle01">
 			<div class="col-medium">
-				<p class='center'>
-				<img src="/img/bruxelles-07.svg" alt='bx' class="cercle-image">
+				<p class='center moyen'>
+				En région bruxelloise, à peine 3,48% des cours dispensés traitent de la question climatique.
 				</p>
 			</div>
 		</section>
 		<section data-id="cercle02">
 			<div class="col-medium">
-				<p class='center'>
-					<img src="/img/wallonie-08.svg" alt='bx' class="cercle-image">
+				<p class='center moyen'>
+					La Wallonie suit de très près avec 3,58% de cours liés au climat.
 				</p>
 			</div>
 		</section>
 		<section data-id="cercle03">
 			<div class="col-medium">
-				<p class="center">
-					<img src="/img/flandre-09.svg" alt='bx' class='cercle-image'>
-
+				<p class="center moyen">
+					La Flandre se démarque légèrement en dépassant le seuil des 4% de cours traitant des enjeux climatiques.
 				</p>
 			</div>
 		</section>		
 	<section data-id="cercle04">
 		<div class="col-medium">
 			<p class="center">
-				image 4
+				La différence entre les régions est donc minime, mais il apparaît clairement qu’elles doivent chacune faire un effort afin d’augmenter la proportion de cours qui abordent les enjeux climatiques dans l’enseignement supérieur.
 			</p>
 		</div>
 	</section>	
@@ -412,7 +463,9 @@ function HEClick(){
 </Scroller>
 
 <div>
-	<h2 class="center"> Quelle institution à la plus grande offre ? </h2>
+	<h2 class="center"style="font-size:12px;"> Là où une différence plus importante existe, c’est entre les hautes écoles et les universités.
+		D’après vous, laquelle de ces deux institutions possède l’offre la plus importante de cours traitant des enjeux climatiques ? 
+		</h2>
 	</div>
 	<div>
 	<button on:click={UNifClick} id="close-image" class='testbutton' style="width:50%;">
@@ -423,13 +476,57 @@ function HEClick(){
 	</button>
 
 	<img src={src} alt='' class='cercle-image'>
-	<p> {answer3}</p>
+	<p class='center'> {answer3}</p>
 </div>
 
+<div> 
+	<h2 class='center'style="margin-bottom:1cm; margin-top:0.5cm;"> Repartition par facultés</h2>
+	<img id="planete" src="/img/cercle-19.svg" alt="scroll" class='center'style="width:75%; margin-bottom:1cm; margin-top:2cm;"/>
+	<p class="center">La répartition des cours liés au climat est également très inégale en fonction des facultés.</p>
+	<p class="center">Les enjeux climatiques et environnementaux sont surtout abordés dans les facultés de sciences et de sciences appliquées. (éclairage de ces cercles-là) A contrario, ils sont très peu présents dans les sciences médicales ou humaines. (éclairage de ces cercles-là)</p>
+	<p class="center">En conséquence, on estime que la moitié des diplômés du supérieur ne reçoivent aucune formation sur les enjeux climatiques et environnementaux. </p>
+	<p class="center">Le Pacte vert européen est pourtant clair : il est indispensable de développer des compétences liées aux enjeux climatiques dans tous les domaines d’expertise.  Ce cloisonnement entre les différentes facultés contribue donc au problème en laissant de côté des disciplines qui peuvent apporter des contributions décisives.</p>
+</div>
+<Scroller {threshold} bind:id={id['fleche']} splitscreen={true}>
+	<div slot="background">
+		<figure>
+			<img id="planete" src="/img/fleche2-14.svg" alt="scroll" class='center'style="width:75%; margin-bottom:1cm; margin-top:2cm;"/>
+		</figure>
+		<p class="big center" style="margin-top:5cm;"> 87%</p>
+	</div>
 
+	<div slot="foreground">
+		<section data-id="fleche01">
+			<div class="col-medium">
+				<p class='center'>L’Europe n’est pas la seule à tirer la sonnette d’alarme. Les étudiants, eux aussi, demandent à être mieux formés sur les enjeux climatiques.</p>
+				<p class='center'>L’asbl The Shifters Belgium, qui promeut l’éducation sur le climat dans l’enseignement supérieur belge, a mené en 2022 une enquête auprès de 600 étudiants. 87% de ceux-ci pensent que « les universités belges doivent dispenser des modules d’enseignement sur le changement climatique ». </p>
+			</div>
+	</div>
+</Scroller>
+<h2 class='center' style="font-size = 12px;">Afin de répondre à cette demande et d’améliorer l’offre de cours traitant des enjeux climatiques dans l’enseignement supérieur belge, l’asbl émet différentes propositions :
+</h2>
 
-<ONSFooter />
+<div> 
+	<img id="planete" src="/img/solution1-15.svg" alt="scroll" class='cercle-image center'/>
+	<p class='center'> Actuellement, seulement 12% des professeurs d’université et 7% des professeurs des hautes écoles ont une expérience d’enseignement sur les enjeux climatiques et environnementaux. </p>
+</div>
 
+<div> 
+	<img id="planete" src="/img/solution2-16.svg" alt="scroll" class='cercle-image center'/>
+	<p class='center'> Ces derniers travailleraient en collaboration avec les professeurs et les établissements d’enseignement supérieur dans le but de transformer les programmes de cours.</p>
+</div>
+<div> 
+	<img id="planete" src="/img/solution3-17.svg" alt="scroll" class='cercle-image center'/>
+	<p class="center"> Ceux-ci permettraient d’évaluer les progrès de la transformation des programmes ainsi que d’assurer la publicité de ces formations. </p>
+</div>
+
+<p class="center"> <b>Au vu de l’urgence climatique actuelle, il est impératif que les institutions de l'enseignement supérieur qui n’ont pas ou très peu de propositions de cours sur le climat prennent leurs responsabilités et proposent des cours de qualité sur le sujet.
+	Il est inquiétant de constater que les universités et hautes écoles belges sont en retard sur la question environnementale et climatique. Les étudiants doivent être formés pour devenir des citoyens engagés et conscients de l'impact de leurs choix sur l'environnement et le climat. Il est donc crucial que des modifications soient faites au niveau de l’éducation belge pour le climat afin de répondre aux besoins des étudiants et de la demande sociétale. Les futures générations en dépendent.
+</b></p>
+<div>
+	<img id="planete" src="/img/header-18.svg" alt="scroll"/>
+
+</div>
 <style>
 
 	@font-face{
@@ -459,7 +556,7 @@ function HEClick(){
 	h2 {
 		color:black;
 		font-family: "Avara-Black", sans-serif;
-		font-size: 20px;
+		font-size: 18px;
 		text-transform: uppercase;
 		margin-bottom: 0.5cm;
 	}
@@ -483,14 +580,27 @@ function HEClick(){
   background: #048D14;
 }
 
+	
 	p{
 		color : black;
-		font-size: 18px;
+		font-size: 12px;
 		font-family: "LunchType_Medium_Expanded";
-		width: 75%;
-		text-align: center;
+		width: 80%;
+		text-align: left;
+		margin-top: 1cm;
+		margin-bottom:1cm;
+
 	}
 
+	.moyen{
+		color : #048D14;
+		font-size: 15px;
+		font-family: "Avara-black";
+		width: 80%;
+		text-align: left;
+		text-transform: uppercase;
+
+	}
 
 .center {
   display: block;
@@ -586,7 +696,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 }
 .bonhomme {
-	width: 100%;
+	width: 80%;
 	margin-top: 1.5cm;
 	margin-bottom: 1.5cm;
 	display :block;
