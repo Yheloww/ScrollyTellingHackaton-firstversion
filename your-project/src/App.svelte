@@ -100,6 +100,8 @@
 			fitBounds(bounds);
 		}
 	}
+	let x = 50;
+	let y = 50;
 
 	// Actions for Scroller components
 	const actions = {
@@ -132,39 +134,34 @@
 		},
 		chart: {
 			chart01: () => {
-				xKey = "area";
-				yKey = null;
-				zKey = null;
-				rKey = null;
-				explore = false;
+				index= 0;
 			},
 			chart02: () => {
-				xKey = "area";
-				yKey = null;
-				zKey = null;
-				rKey = "pop";
-				explore = false;
+				index = 1;
 			},
 			chart03: () => {
-				xKey = "area";
-				yKey = "density";
-				zKey = null;
-				rKey = "pop";
-				explore = false;
+				index = 2;
 			},
 			chart04: () => {
-				xKey = "area";
-				yKey = "density";
-				zKey = "parent_name";
-				rKey = "pop";
-				explore = false;
+				index =3;
+			}
+		},
+		loi: {
+			loi01: () => {
 			},
-			chart05: () => {
-				xKey = "area";
-				yKey = "density";
-				zKey = null;
-				rKey = "pop";
-				explore = true;
+			loi02: () => {
+			}
+		},
+		cercle: {
+			cercle01: () => {
+				x=50;
+				y=50;
+			},
+			cercle02: () => {
+			},
+			cercle03: () => {
+			},
+			cercle04: () => {
 			}
 		}
 	};
@@ -245,6 +242,8 @@ function scrollRotate() {
     let image = document.getElementById("planete");
     image.style.transform = "rotate(" + window.pageYOffset/6 + "deg)";
 }
+import {fade} from 'svelte/transition'
+
 
 let percentage = 50;
 
@@ -263,21 +262,21 @@ function handleClick() {
 		answer = "5%";
 	}
 
-	$: number = 1;
-	$: image = 'bonhomme_tous-12.svg';
+let src ="";
+let answer3 = "";
 
-	function backgoundClick(number){
-		if (number== 1){
-			image = 'bonhomme_tous-12.svg';
-		} else if (number == 2){
-			image = 'bonhomme_tous2-12.svg';
-		} else if ( number == 3){
-			image = 'bonhomme_tous3-12.svg';
-		} else if (number == 4) {
-			image = 'bonhomme_tous4-12.svg';
-		}
+function UNifClick() {
+			src = "/img/université-10.svg"
+			answer3 = "bien joué"
 	}
+function HEClick(){
+			src ="/img/hauteecole-11.svg"
+			answer3 = "nope"
+}
 
+	$: number = 1;
+	let image = ['/img/bonhomme_tous-12.svg','/img/bonhomme_tous2-12.svg','/img/bonhomme_tous3-12.svg','/img/bonhomme_tous4-12.svg'];
+	let index = 0;
 
 </script>
 
@@ -292,7 +291,7 @@ function handleClick() {
 	
 </Header>
 
-
+<!-- // quizz 1 -->
 	<div>
 	<h2 class="center">Selon vous, quel est le pourcentage de cours qui traitent des enjeux climatiques et environnementaux dans les universités et hautes écoles belges ?  </h2>
 	</div>
@@ -306,25 +305,23 @@ function handleClick() {
 	<p> {response}</p>
 	<p class="big center"> {answer}</p>
 
-
-<Scroller {threshold} bind:id={id['chart']} splitscreen={true}>
+<!-- // texte de loi -->
+<Scroller {threshold} bind:id={id['loi']} splitscreen={true}>
 	<div slot="background">
 		<figure>
 			<img id="planete" src="/img/text_documenet-10.svg" alt="scroll" class='text'/>
-		
-
 		</figure>
 	</div>
 
 	<div slot="foreground">
-		<section data-id="chart01">
+		<section data-id="loi01">
 			<div class="col-medium">
 				<p>
 					texte de loi
 				</p>
 			</div>
 		</section>
-		<section data-id="chart02">
+		<section data-id="loi02">
 			<div class="col-medium">
 				<img id="planete" src="/img/loi-09.svg" alt="scroll"/>
 
@@ -332,12 +329,14 @@ function handleClick() {
 	</div>
 </Scroller>
 	
-
+<!-- bonshommes  -->
 <Scroller {threshold} bind:id={id['chart']} splitscreen={true}>
 	<div slot="background">
-		<figure>
-			<img id="planete" src="/img/{image}" alt="scroll" class='bonhomme center'/>
-		</figure>
+
+		<h2>Population active</h2>
+		{#each [image[index]] as src (index)}
+	<img transition:fade class="bonhomme" {src} alt="" />	
+	{/each}
 	</div>
 
 	<div slot="foreground">
@@ -346,8 +345,6 @@ function handleClick() {
 				<p class='center'>
 				image 1
 				</p>
-				<button  on:click={backgoundClick(2)} class='center'>click</button>
-
 			</div>
 		</section>
 		<section data-id="chart02">
@@ -355,8 +352,6 @@ function handleClick() {
 				<p class='center'>
 					image 2
 				</p>
-				<button  on:click={backgoundClick(3)} class='center'>click</button>
-
 			</div>
 		</section>
 		<section data-id="chart03">
@@ -364,23 +359,71 @@ function handleClick() {
 				<p class="center">
 					image 3
 				</p>
-				<button  on:click={backgoundClick(4)} class='center'>click</button>
-
 			</div>
-		</section>
-		<section data-id="chart04">
+		</section>		
+	<section data-id="chart04">
+		<div class="col-medium">
+			<p class="center">
+				image 4
+			</p>
+		</div>
+	</section>	
+</div>
+
+</Scroller>
+
+<Scroller {threshold} bind:id={id['cercle']} splitscreen={true}>
+	<div slot="background">
+			<img id="planete" src="/img/cercle1-03.svg" alt="scroll" class='center cercle'/>
+	</div>
+
+
+	<div slot="foreground">
+		<section data-id="cercle01">
 			<div class="col-medium">
 				<p class='center'>
-					image 4
+				<img src="/img/bruxelles-07.svg" alt='bx' class="cercle-image">
 				</p>
-				<button  on:click={backgoundClick(4)} class='center'>click</button>
+			</div>
+		</section>
+		<section data-id="cercle02">
+			<div class="col-medium">
+				<p class='center'>
+					<img src="/img/wallonie-08.svg" alt='bx' class="cercle-image">
+				</p>
+			</div>
+		</section>
+		<section data-id="cercle03">
+			<div class="col-medium">
+				<p class="center">
+					<img src="/img/flandre-09.svg" alt='bx' class='cercle-image'>
 
-			</div>		
-	</div>
+				</p>
+			</div>
+		</section>		
+	<section data-id="cercle04">
+		<div class="col-medium">
+			<p class="center">
+				image 4
+			</p>
+		</div>
+	</section>	
+</div>
 </Scroller>
 
 <div>
-<img id="planete" src="/img/region_comparaison-05.svg" alt="scroll" class='center'/>
+	<h2 class="center"> Quelle institution à la plus grande offre ? </h2>
+	</div>
+	<div>
+	<button on:click={UNifClick} id="close-image" class='testbutton' style="width:50%;">
+		université
+	</button>
+	<button on:click={HEClick} id="close-image" class='testbutton' style="width:50%; margin-bottom:1cm;">
+		Haute-école
+	</button>
+
+	<img src={src} alt='' class='cercle-image'>
+	<p> {answer3}</p>
 </div>
 
 
@@ -418,7 +461,7 @@ function handleClick() {
 		font-family: "Avara-Black", sans-serif;
 		font-size: 20px;
 		text-transform: uppercase;
-		margin-bottom: 1cm;
+		margin-bottom: 0.5cm;
 	}
 	.testbutton {
   font-family: "Avara-black";
@@ -444,15 +487,10 @@ function handleClick() {
 		color : black;
 		font-size: 18px;
 		font-family: "LunchType_Medium_Expanded";
-		display: block;
-  		margin-left: auto;
-		margin-right: auto;
 		width: 75%;
+		text-align: center;
 	}
-	.chart {
-		margin-top: 45px;
-		width: calc(100% - 5px);
-	}
+
 
 .center {
   display: block;
@@ -543,17 +581,18 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .big {
 	color:#048D14;
-	font-size: 250px;
+	font-size: 100px;
 	font-family: "Avara-black";
 
 }
 .bonhomme {
 	width: 100%;
 	margin-top: 1.5cm;
-	margin-bottom: auto;
+	margin-bottom: 1.5cm;
 	display :block;
 	margin-left: auto;
 	margin-right: auto;
+	
 
 }
 .text {
@@ -565,5 +604,21 @@ input[type=range]:focus::-ms-fill-upper {
 	width :200%;
 	opacity: 0.5;
 	
+}
+.cercle{
+	width: 75%;
+	margin-top: 2.5cm;
+	margin-bottom: auto;
+	display :block;
+	margin-left: auto;
+	margin-right: auto;
+	
+
+}
+.cercle-image{
+	width: 75%;
+	display :block;
+	margin-left: auto;
+	margin-right: auto;
 }
 </style>

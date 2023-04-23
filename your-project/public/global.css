@@ -137,8 +137,9 @@ small {
 
 .col-medium {
 	width: 100%;
-	max-width: 680px;
-	margin: 0 24px;
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
 }
 
 .col-narrow {
